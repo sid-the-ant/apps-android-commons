@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -297,8 +298,10 @@ public class UploadActivity extends BaseActivity implements UploadContract.View,
         } else if (ACTION_INTERNAL_UPLOADS.equals(action)) {
             receiveInternalSharedItems();
         }
-
-        if (uploadableFiles == null || uploadableFiles.isEmpty()) {
+        if (uploadableFiles.size() > 5) {
+            handleLargeMedia();
+        }
+        else if (uploadableFiles == null || uploadableFiles.isEmpty()) {
             handleNullMedia();
         } else {
             //Show thumbnails
@@ -393,6 +396,10 @@ public class UploadActivity extends BaseActivity implements UploadContract.View,
      */
     private void handleNullMedia() {
         ViewUtil.showLongToast(this, R.string.error_processing_image);
+        finish();
+    }
+        private void handleLargeMedia() {
+        ViewUtil.showLongToast(this, R.string.HandleLargeMedia);
         finish();
     }
 
